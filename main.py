@@ -30,7 +30,13 @@ class MyWindowClass(QtWidgets.QMainWindow, form_class):
 			if field.text() == "":
 				return True
 		return False
-	
+
+	def is_zero(self, *args):
+		for val in args:
+			if val == 0:
+				return True
+		return False
+
 	def getData(self):
 		if not self.emptyFields(
 			self.txtD, self.txtK, self.txtH, self.txtP, self.txtE, self.txtA, self.txtB):
@@ -64,7 +70,11 @@ class MyWindowClass(QtWidgets.QMainWindow, form_class):
 		return S
 
 	def cal_fx(self):
-		self.fx = self.b - self.a
+		if self.b > self.a:
+			self.fx = self.b - self.a
+		else:
+			self.fx = 0
+			print("Datos erroneos: A no deberia ser mayor que B.")
 
 	def aprox(self, Ri, RiAnt):
 		# dif = math.round((RiAnt - Ri) * 1000000.0) / 1000000.0
@@ -133,17 +143,21 @@ class MyWindowClass(QtWidgets.QMainWindow, form_class):
 
 	def run_program(self):
 		global Yi, Ri
-
+		# Compruebo que no hayan campos vacios
 		if not self.emptyFields(
 			self.txtD, self.txtK, self.txtH, self.txtP, self.txtE, self.txtA, self.txtB):
 
-			self.getData()
-			if self.has_solutions():
-				self.cal_fx()
-				self.run_algoritm()
-				self.show_result(Yi, Ri)
+			self.getData() # Actualizo las variables
+			self.cal_fx() 
+			# Verifico que h, d y fx no sean iguales a cero.
+			if not self.is_zero(self.h, self.d, self.fx):
+				if self.has_solutions():
+					self.run_algoritm()
+					self.show_result(Yi, Ri)
+				else:
+					self.labelDesc.setText("No hay soluciones factibles.")
 			else:
-				self.labelDesc.setText("No hay soluciones factibles.")
+				self.labelDesc.setText("Algunos campos no pueden ser cero [0] y A no debe ser mayor que B.")
 		else:
 			self.labelDesc.setText("No puede haber campos vacios.")
 
