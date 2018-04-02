@@ -20,9 +20,11 @@ Cross platform application of EOQ for the probabilistic model
 ## Instructions for Linux (32 and 64bits)
 1. Download the compressed file according to your Operating system.
 2. Decompress the file.
-3. Go to the main folder in your terminal (console)
-4. type `./main` in the terminal.
-5. Done!
+3. Go to the main folder and clicked on the execute file called **main**.
+   - **if the application not run try the step 4 and 5**
+4. Go to the main folder in your terminal (console)
+5. type `./main` in the terminal.
+6. Done!
 
 ## Screenshot
 
